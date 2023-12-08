@@ -28,7 +28,15 @@ def end_game(grille):
         diag2 = sum(np.fliplr(grille).diagonal() == grille[2, 0] * (grille[2, 0] != ' ') + '#' * (grille[2, 0] == ' ')) == 3
         if diag1 or diag2:      
             return True
-            
+
+
+def prettify_grille(grille):
+    res = "  _   _   _ \n"
+    for line in grille:
+        res += f"| {line[0]} | {line[1]} | {line[2]} |\n"
+    
+    return res+"  ‾   ‾   ‾ "
+  
 
 def update_grille(grille=None, move=None):
     '''Update la grille en fonction du move
@@ -48,31 +56,22 @@ def update_grille(grille=None, move=None):
                 raise Exception("La case est déjà prise")
     return grille
 
+
 def tictactoe():
     ''' Fonction implémentant le jeu tictactoe à 2 joueurs
     '''
     grille = np.array([[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']])
-    End_game = False
+    game_ended = False
     joueur = 0
     while not End_game:
-        print(grille)
+        print(prettify_grille(grille))
         print("Choisir la ligne")
         coordX = int(input())
         print("Choisir la colonne")
         coordY = int(input())
         move = [joueur, coordX, coordY]
-        try:
-            update_grille(grille, move)
-        except:
-            while not valide_move(grille, move):
-                print("Les coordonnées choisient ne sont pas correctes !")
-                print("Choisir la ligne")
-                coordX = int(input())
-                print("Choisir la colonne")
-                coordY = int(input())
-                move = [joueur, coordX, coordY]
-            update_grille(grille, move)
+        update_grille(grille, move)
         End_game = end_game(grille)
         joueur = 1 - joueur
-    print(grille)
+    print(prettify_grille(grille))
     print(f"Le joueur {1 - joueur} a gagné !!!")
