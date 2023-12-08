@@ -70,7 +70,17 @@ def tictactoe():
         print("Choisir la colonne")
         coordY = int(input())
         move = [joueur, coordX, coordY]
-        update_grille(grille, move)
+        try:
+            update_grille(grille, move)
+        except:
+            while not valide_move(grille, move):
+                print("Choisir des coordonnées correctes")
+                print("Choisir la ligne")
+                coordX = int(input())
+                print("Choisir la colonne")
+                coordY = int(input())
+                move = [joueur, coordX, coordY]
+            update_grille(grille, move)
         End_game = end_game(grille)
         joueur = 1 - joueur
     print(prettify_grille(grille))
