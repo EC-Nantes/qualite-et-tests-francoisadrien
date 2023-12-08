@@ -4,7 +4,7 @@ def valide_move(grille=None, move=None):
     ''' Renvoie True si le mouvement est valide et False sinon
     '''
     if move is not None and grille is not None:
-        if len(move) != 3 or move[1] > 2 or move[2] > 2 or move[1] < 0 or move[2] < 0 or move[0] not in [0, 1]:
+        if len(move) != 3 or move[0] not in [0, 1] or move[1] not in [0, 1, 2] or move[2] not in [0, 1, 2]:
             return False
         else:
             return grille[move[1], move[2]] == ' '
