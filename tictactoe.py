@@ -56,17 +56,17 @@ def tictactoe():
     ''' Fonction implémentant le jeu tictactoe à 2 joueurs
     '''
     grille = np.array([[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']])
-    End_game = False
+    game_ended = False
     joueur = 0
-    while not End_game:
+    while not game_ended:
         print(prettify_grille(grille))
         print("Choisir la ligne")
-        coordX = int(input())
+        coord_x = int(input())
         print("Choisir la colonne")
-        coordY = int(input())
-        move = [joueur, coordX, coordY]
+        coord_y = int(input())
+        move = [joueur, coord_x, coord_y]
         update_grille(grille, move)
-        End_game = end_game(grille)
+        game_ended = end_game(grille)
         joueur = 1 - joueur
     print(prettify_grille(grille))
     print(f"Le joueur {1 - joueur} a gagné !!!")
