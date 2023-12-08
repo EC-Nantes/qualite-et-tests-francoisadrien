@@ -4,7 +4,7 @@ def valide_move(grille=None, move=None):
     ''' Renvoie True si le mouvement est valide et False sinon
     '''
     if move is not None and grille is not None:
-        if len(move) != 3 or move[1] > 2 or move[2] > 2 or move[1] < 0 or move[2] < 0 or move[0] not in [0, 1]:
+        if len(move) != 3 or move[0] not in [0, 1] or move[1] not in [0, 1, 2] or move[2] not in [0, 1, 2]:
             return False
         else:
             return grille[move[1], move[2]] == ' '
@@ -53,7 +53,7 @@ def update_grille(grille=None, move=None):
             if valide_move(grille, move):
                 grille[move[1], move[2]] = symbol
             else:
-                raise Exception("La case est déjà prise")
+                raise ValueError("La case est déjà prise")
     return grille
 
 
@@ -63,25 +63,25 @@ def tictactoe():
     grille = np.array([[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']])
     game_ended = False
     joueur = 0
-    while not End_game:
+    while not game_ended:
         print(prettify_grille(grille))
         print("Choisir la ligne")
-        coordX = int(input())
+        coord_x = int(input())
         print("Choisir la colonne")
-        coordY = int(input())
-        move = [joueur, coordX, coordY]
+        coord_y = int(input())
+        move = [joueur, coord_x, coord_y]
         try:
             update_grille(grille, move)
-        except:
+        except ValueError as error:
             while not valide_move(grille, move):
-                print("Choisir des coordonnées correctes")
+                print(error)
                 print("Choisir la ligne")
-                coordX = int(input())
+                coord_x = int(input())
                 print("Choisir la colonne")
-                coordY = int(input())
-                move = [joueur, coordX, coordY]
+                coord_y = int(input())
+                move = [joueur, coord_x, coord_y]
             update_grille(grille, move)
-        End_game = end_game(grille)
+        game_ended = end_game(grille)
         joueur = 1 - joueur
     print(prettify_grille(grille))
     print(f"Le joueur {1 - joueur} a gagné !!!")
