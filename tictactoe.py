@@ -44,6 +44,15 @@ def update_grille(grille=None, move=None):
     return grille
 
 
+def prettify_grille(grille):
+    res = "  _   _   _ \n"
+    for line in grille:
+        res += f"| {line[0]} | {line[1]} | {line[2]} |\n"
+    
+    return res+"  ‾   ‾   ‾ "
+
+
 Grille = np.array([[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']])
 Move = [0, 1, 1]
-print(update_grille(Grille, Move))
+# print(update_grille(Grille, Move))
+print(prettify_grille(update_grille(Grille, Move)))
