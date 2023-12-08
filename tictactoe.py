@@ -4,7 +4,10 @@ def valide_move(grille=None, move=None):
     ''' Renvoie True si le mouvement est valide et False sinon
     '''
     if move is not None and grille is not None:
-        return grille[move[1], move[2]] == ' '
+        if len(move) != 3 or move[1] > 2 or move[2] > 2 or move[1] < 0 or move[2] < 0 or move[0] not in [0, 1]:
+            return False
+        else:
+            return grille[move[1], move[2]] == ' '
     
 def end_game(grille):
     ''' Calcule si le jeu est fini ou non
@@ -41,6 +44,8 @@ def update_grille(grille=None, move=None):
             symbol = 'X' * (move[0] == 1) + 'O' * (move[0] == 0)
             if valide_move(grille, move):
                 grille[move[1], move[2]] = symbol
+            else:
+                raise Exception("La case est déjà prise")
     return grille
 
 def tictactoe():
@@ -56,7 +61,17 @@ def tictactoe():
         print("Choisir la colonne")
         coordY = int(input())
         move = [joueur, coordX, coordY]
-        update_grille(grille, move)
+        try:
+            update_grille(grille, move)
+        except:
+            while not valide_move(grille, move):
+                print("Les coordonnées choisient ne sont pas correctes !")
+                print("Choisir la ligne")
+                coordX = int(input())
+                print("Choisir la colonne")
+                coordY = int(input())
+                move = [joueur, coordX, coordY]
+            update_grille(grille, move)
         End_game = end_game(grille)
         joueur = 1 - joueur
     print(grille)
