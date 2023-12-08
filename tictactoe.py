@@ -53,7 +53,7 @@ def update_grille(grille=None, move=None):
             if valide_move(grille, move):
                 grille[move[1], move[2]] = symbol
             else:
-                raise Exception("La case est déjà prise")
+                raise ValueError("La case est déjà prise")
     return grille
 
 
@@ -72,9 +72,9 @@ def tictactoe():
         move = [joueur, coord_x, coord_y]
         try:
             update_grille(grille, move)
-        except:
+        except ValueError as error:
             while not valide_move(grille, move):
-                print("Choisir des coordonnées correctes")
+                print(error)
                 print("Choisir la ligne")
                 coord_x = int(input())
                 print("Choisir la colonne")
